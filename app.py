@@ -52,6 +52,11 @@ def products():
     
     return 'this is products page'
 
+@app.route('/view/<int:sno>')
+def view(sno):
+    todo = Todo.query.filter_by(sno=sno).first()
+    return render_template('view.html',todo=todo)
+
 @app.route('/update/<int:sno>', methods=['GET', 'POST'])
 def update(sno):
     if request.method=='POST':
