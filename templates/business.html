@@ -1,0 +1,173 @@
+{% extends 'base.html' %}
+{% block title %} Home{% endblock title %} 
+{% block script%} 
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<script type="text/javascript">
+  console.log(4234)
+  google.charts.load("current", {packages:["corechart"]});
+  google.charts.setOnLoadCallback(drawChart);
+  function drawChart() {
+    var data = google.visualization.arrayToDataTable([
+  {% for key, value in data.items() %}
+    {% if value is string %}
+      ['{{ key }}', '{{ value }}'],
+    {% else %}
+      ['{{ key }}', {{ value }}],
+    {% endif %}
+  {% endfor %}
+    ]);
+
+    var options = {
+      title: 'My Daily Activities',
+      is3D: true,
+    };
+
+    var chart = new google.visualization.PieChart(document.getElementById('piechart_3d'));
+    chart.draw(data, options);
+  }
+</script>
+{%endblock script%}
+{% block body %}
+<div class="container my-4">
+    <h2>View Business OverView</h2>
+</div>
+    <div class="container my-4">
+       
+      <table class="table">
+        <tr>
+          <th>Total Sales</th>
+          <th style="color:blue;">Total Paid Sales</th>
+          <th style="color:red;">Total Unpaid Sales</th>
+        </tr>
+        
+        <tbody>
+          <tr>
+            
+            <td>{{sales_detail[0]}}</td>
+            <td style="color:blue;">{{sales_detail[1]}}</td>
+            <td style="color:red;">{{sales_detail[2]}}</td>
+          </tr>
+        </tbody>
+        
+      </table>
+      
+    </div>
+    <div class="container my-4">
+      <h2>Customer Analyses</h2>
+  </div>
+    <div class="container my-4">
+       
+      <table class="table">
+        <tr>
+          <th>Customer Name</th>
+          <th>Contact No.</th>
+          <th>Total Purchase</th>
+          <th>Total Paid</th>
+          <th>Remain To Pay</th>
+          <th>Total Purchase Count</th>
+        </tr>
+        
+        <tbody>
+          {%for customer in per_customer_sale%}
+          <tr>
+            
+            <td>{{customer[5]}}</td>
+            <td>{{customer[6]}}</td>
+            <td>{{customer[0]}}</td>
+            <td>{{customer[1]}}</td>
+            <td>{{customer[2]}}</td>
+            <td>{{customer[4]}}</td>
+          </tr>
+          {%endfor%}
+        </tbody>
+        
+      </table>
+      
+    </div>
+    <div class="container my-4">
+      <div class="container my-3">
+        <h2>Analyze Your Sales </h2>
+        <a href="today" type="button" class="btn btn-outline-dark btn-sm mx-2">Today's Sales</button>
+        <a href="oldest" type="button" class="btn btn-outline-dark btn-sm mx-2">Yesterday's Sale</button>
+        <a href="bytitle" type="button" class="btn btn-outline-dark btn-sm mx-2">7 days sales</button>
+        <a href="bydate" type="button" class="btn btn-outline-dark btn-sm mx-2">1 Month Sale</button>
+        <a href="bydate" type="button" class="btn btn-outline-dark btn-sm mx-2">1 Quarter Sale</button>
+        <a href="bydate" type="button" class="btn btn-outline-dark btn-sm mx-2">1 Year Sale</button>
+        <a href="bydate" class="link-secondary mx-4"></a>
+      </div>
+    </div>
+    
+    <div class="container my-4">
+      {% for sales in sales_data %}
+        {% if loop.index==1 %}
+          <h1> Today's Sales </h1>
+        {%endif%}
+        {% if loop.index==2 %}
+          <h1> Yesterday's Sales </h1>
+        {%endif%}  
+        {% if loop.index==3 %}
+          <h1> Last week's Sales </h1>
+        {%endif%}  
+        {% if loop.index==4 %}
+          <h1> Last month's Sales </h1>
+        {%endif%}  
+        {% if loop.index==5 %}
+          <h1> Last Quarter Sale </h1>
+          {%endif%}  
+        {% if loop.index==6 %}
+          <h1> Last Year Sale </h1>
+
+        {%endif%}
+        <div class="container my-4">
+          {% if sales|length == 0 %}
+          <div class="alert alert-dark" role="alert" style="color:red";>
+            No Customer Here!
+          </div>
+            {% else %} 
+       
+          <table class="table">
+            <tr>
+              <th>Customer Id</th>
+              <th>Total Purchase Amout</th>
+              <th>Total Paid Amount</th>
+              <th>Remain Amount</th>
+              
+            </tr>
+            
+            <tbody>
+             
+                {%for customer in sales%}
+                <tr>
+                  
+                  <td>{{customer.customer_id}}</td>
+                  <td>{{customer.total_price}}</td>
+                  <td>{{customer.paid_price}}</td>
+                  <td>{{customer.remain_price}}</td>
+                  
+                </tr>
+                {%endfor%}
+            </tbody>
+            
+          </table>
+          {%endif%}
+          
+        </div>
+      
+      {%endfor%}
+    </div>
+    
+   
+    <!-- Optional JavaScript; choose one of the two! -->
+
+    <!-- Option 1: Bootstrap Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0"
+        crossorigin="anonymous"></script>
+
+    <!-- Option 2: Separate Popper and Bootstrap JS -->
+    <!--
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.6.0/dist/umd/popper.min.js" integrity="sha384-KsvD1yqQ1/1+IA7gi3P0tyJcT3vR+NdBTt13hSJ2lnve8agRGXTTyNaBYmCR/Nwi" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.min.js" integrity="sha384-nsg8ua9HAw1y0W1btsyWgBklPnCUAFLuTMS2G72MMONqmOymq585AcH49TLBQObG" crossorigin="anonymous"></script>
+    -->
+
+{% endblock body %}

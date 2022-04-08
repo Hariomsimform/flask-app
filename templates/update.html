@@ -3,15 +3,19 @@
 {% block body %}
 
     <div class="container my-3">
-        <h2>Update Todo</h2>
+        <h2>Add Items Purchased</h2>
         <form action="/update/{{todo.sno}}" method="POST">
             <div class="mb-3">
-              <label for="title" class="form-label">Todo Title</label>
-              <input type="text" class="form-control" name="title" id="title" value="{{todo.title}}" aria-describedby="emailHelp"> 
+              <label for="item" class="form-label">Item Name(More THen 1)</label>
+              <input type="text" class="form-control" name="item" id="item" aria-describedby="emailHelp"> 
             </div>
             <div class="mb-3">
-              <label for="desc" class="form-label">Todo Description</label>
-              <input type="text" class="form-control" value="{{todo.desc}}" name="desc" id="desc">
+              <label for="totalprice" class="form-label">Total Item Amount</label>
+              <input type="text" class="form-control"  name="totalprice" id="totalprice">
+            </div>
+            <div class="mb-3">
+              <label for="paidamount" class="form-label">Paid Amount</label>
+              <input type="text" class="form-control"  name="paidamount" id="paidamount">
             </div>
             
             <button type="submit" class="btn btn-dark">Update</button>

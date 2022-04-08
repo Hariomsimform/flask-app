@@ -2,20 +2,56 @@
 {% block title %} Home{% endblock title %} 
 {% block body %}
 
-    <div class="container my-3">
-        <h2>View Todo</h2>
-        <form action="/" method="POST">
-            <div class="mb-3">
-              <label for="title" class="form-label">Todo Title</label>
-              <texarea readonly type="text" class="form-control" value="{{todo.title}}" name="desc" id="desc">{{todo.title}}</texarea>
-            </div>
-            <div class="mb-3">
-              <label for="desc" class="form-label">Todo Description</label>
-              <texarea readonly type="text" class="form-control" value="{{todo.desc}}" name="desc" id="desc">{{todo.desc}}</texarea>
-            </div>
-            
-          </form>
+  <div class="container my-3">
+      <h2>View Customer Khata</h2>
+      
+      <form action="/" method="POST">
+          <div class="mb-3">
+            <label for="title" class="form-label">Customer Name</label>
+            <texarea readonly type="text" class="form-control" value="{{todo.title}}" name="desc" id="desc">{{todo.title}}</texarea>
+          </div>
+          <div class="mb-3">
+            <label for="desc" class="form-label">Customer Contact No.</label>
+            <texarea readonly type="text" class="form-control" value="{{todo.desc}}" name="desc" id="desc">{{todo.desc}}</texarea>
+          </div>
+          
+      </form>
+  </div>
+    <div class="container my-4">
+      <table class="table">
+        <tr>
+          <th>Product Name</th>
+          <th>Total Price</th>
+          <th>Paid Price</th>
+          <th>Remain Price</th>
+          <th>Purchase Date</th>
+        </tr>
+        {%for product in product_list%}
+        <tbody>
+          <tr>
+            <td>{{product.product_name| truncate(35)}}</td>
+            <td>{{product.total_price}}</td>
+            <td>{{product.paid_price}}</td>
+            <td>{{product.remain_price}}</td>
+            <td>{{product.date_created}}</td>
+          </tr>
+        </tbody>
+        {%endfor%}  
+      </table>
+
     </div>
+      <div class="container my-2">
+        <table class="table">
+          <tr>
+            <th>Total Unpaid Amount:</th>
+            <th>{{sum}}</th>
+          </tr>
+        </table>
+      </div>      
+    </div>
+      
+  </div>
+
    
     <!-- Optional JavaScript; choose one of the two! -->
 
